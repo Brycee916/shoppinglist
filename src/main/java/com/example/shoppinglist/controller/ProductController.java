@@ -36,13 +36,17 @@ public class ProductController {
 
     // TODO 8: Define a method named getProductById that takes a Long parameter named id (product ID) annotated with @PathVariable.
     // TODO 9: Annotate this method with @GetMapping("/{id}") to map it to GET requests with an ID parameter.
-
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         // TODO 10: Inside the method, Call the getProductById method from productService to find a product by its ID.
+        Product product = productService.getProductById(id);
         // TODO 11: Check if the product is not null (i.e., it was found).
+        if (product != null){
         // If found, return the product with an HTTP 200 OK status using ResponseEntity.ok().
+            return ResponseEntity.ok(product);
+        }
         // If not found (product is null), return an HTTP 404 NOT FOUND status using ResponseEntity.notFound().build().
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
 
