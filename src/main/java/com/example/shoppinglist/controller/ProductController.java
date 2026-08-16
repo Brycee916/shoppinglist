@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,14 +63,19 @@ public class ProductController {
     }
 
 
-    // TODO 16: Define a method named updateProduct that takes a Long parameter named id (product ID) annotated with @PathVariable, and a Product object annotated with @RequestBody (to hold updated data). The method returns a ResponseEntity containing the updated Product object with an HTTP 200 OK status or an HTTP 404 NOT FOUND status if not found.
-    // TODO 17: Annotate this method with @PutMapping("/{id}") to map it to PUT requests with an ID parameter.
+    // Define a method named updateProduct that takes a Long parameter named id (product ID) annotated with @PathVariable, and a Product object annotated with @RequestBody (to hold updated data). The method returns a ResponseEntity containing the updated Product object with an HTTP 200 OK status or an HTTP 404 NOT FOUND status if not found.
+    // Annotate this method with @PutMapping("/{id}") to map it to PUT requests with an ID parameter.
+    @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        // TODO 18: Inside the method, Call the updateProduct method from productService to update the product with the given ID. If the product is found, it will be updated with the data in productDetails.
-        // TODO 19: Check if updatedProduct is not null (i.e., the product was found and updated).
+        // Inside the method, Call the updateProduct method from productService to update the product with the given ID. If the product is found, it will be updated with the data in productDetails.
+        Product updatedProduct = productService.updateProduct(id, productDetails);
+        // Check if updatedProduct is not null (i.e., the product was found and updated).
+        if (updatedProduct != null){
         // If found, return the updated product with an HTTP 200 OK status.
+            return ResponseEntity.ok(updatedProduct);
+        }
         // If not found, return an HTTP 404 NOT FOUND status.
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
     // TODO 20: Define a method named deleteProduct that takes a Long parameter named id (product ID) annotated with @PathVariable.  The method returns a ResponseEntity containing a success message or an HTTP 404 NOT FOUND status if the product was not found.
