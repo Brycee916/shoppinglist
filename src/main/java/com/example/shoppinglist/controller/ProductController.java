@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,32 +16,32 @@ import com.example.shoppinglist.model.Product;
 import com.example.shoppinglist.service.ProductService;
 
 
-// TODO 1: Create a new Java class named ProductController in the controller package. Annotate this class with @RestController to specify that it is a Spring REST controller.
-// TODO 2: Use @RequestMapping to set the base URL for all endpoints in this controller to "/api/products".
+// Create a new Java class named ProductController in the controller package. Annotate this class with @RestController to specify that it is a Spring REST controller.
+// Use @RequestMapping to set the base URL for all endpoints in this controller to "/api/products".
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    // TODO 3: Declare a private field productService of type ProductService.Use @Autowired to inject an instance of ProductService.
+    // Declare a private field productService of type ProductService.Use @Autowired to inject an instance of ProductService.
     @Autowired
     private ProductService productService;
 
-    // TODO 4: Define a method named getAllProducts that returns a ResponseEntity containing a list of Product objects with an HTTP 200 OK status.
-    // TODO 5: Annotate this method with @GetMapping to map it to GET requests with the base URL "/api/products".
+    // Define a method named getAllProducts that returns a ResponseEntity containing a list of Product objects with an HTTP 200 OK status.
+    // Annotate this method with @GetMapping to map it to GET requests with the base URL "/api/products".
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        //TODO 6: Inside the method, Call the getAllProducts method from productService to retrieve all products from the database.
+        //Inside the method, Call the getAllProducts method from productService to retrieve all products from the database.
         List<Product> allProducts = productService.getAllProducts();
-        //TODO 7: Return the list of products with an HTTP 200 OK status using ResponseEntity.ok().
+        //Return the list of products with an HTTP 200 OK status using ResponseEntity.ok().
         return ResponseEntity.ok(allProducts);
     }
 
-    // TODO 8: Define a method named getProductById that takes a Long parameter named id (product ID) annotated with @PathVariable.
-    // TODO 9: Annotate this method with @GetMapping("/{id}") to map it to GET requests with an ID parameter.
+    // Define a method named getProductById that takes a Long parameter named id (product ID) annotated with @PathVariable.
+    // Annotate this method with @GetMapping("/{id}") to map it to GET requests with an ID parameter.
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        // TODO 10: Inside the method, Call the getProductById method from productService to find a product by its ID.
+        // Inside the method, Call the getProductById method from productService to find a product by its ID.
         Product product = productService.getProductById(id);
-        // TODO 11: Check if the product is not null (i.e., it was found).
+        // Check if the product is not null (i.e., it was found).
         if (product != null){
         // If found, return the product with an HTTP 200 OK status using ResponseEntity.ok().
             return ResponseEntity.ok(product);
@@ -50,12 +51,14 @@ public class ProductController {
     }
 
 
-    //  TODO 12: Define a method named addProduct that takes a Product object annotated with @ModelAttribute. The method returns a ResponseEntity containing the saved Product with an HTTP 200 OK status.
-    // TODO 13: Annotate this method with @PostMapping("/add") to map it to POST requests made to "/api/products/add".
+    // Define a method named addProduct that takes a Product object annotated with @ModelAttribute. The method returns a ResponseEntity containing the saved Product with an HTTP 200 OK status.
+    // Annotate this method with @PostMapping("/add") to map it to POST requests made to "/api/products/add".
+    @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@ModelAttribute Product product) {
-        // TODO 14: Inside the method, Call the addProduct method from productService to save the new product to the database.
-        // TODO 15: Return the saved product with an HTTP 200 OK status using ResponseEntity.ok().
-        return null;
+        // Inside the method, Call the addProduct method from productService to save the new product to the database.
+        Product addedProduct = productService.addProduct(product);
+        // Return the saved product with an HTTP 200 OK status using ResponseEntity.ok().
+        return ResponseEntity.ok(addedProduct);
     }
 
 
