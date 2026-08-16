@@ -1,29 +1,37 @@
 package com.example.shoppinglist.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.shoppinglist.model.Product;
 import com.example.shoppinglist.service.ProductService;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 // TODO 1: Create a new Java class named ProductController in the controller package. Annotate this class with @RestController to specify that it is a Spring REST controller.
 // TODO 2: Use @RequestMapping to set the base URL for all endpoints in this controller to "/api/products".
+@RestController
+@RequestMapping("/api/products")
 public class ProductController {
     // TODO 3: Declare a private field productService of type ProductService.Use @Autowired to inject an instance of ProductService.
-
+    @Autowired
     private ProductService productService;
 
     // TODO 4: Define a method named getAllProducts that returns a ResponseEntity containing a list of Product objects with an HTTP 200 OK status.
     // TODO 5: Annotate this method with @GetMapping to map it to GET requests with the base URL "/api/products".
-
+    @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         //TODO 6: Inside the method, Call the getAllProducts method from productService to retrieve all products from the database.
+        List<Product> allProducts = productService.getAllProducts();
         //TODO 7: Return the list of products with an HTTP 200 OK status using ResponseEntity.ok().
-
-        return null;
+        return ResponseEntity.ok(allProducts);
     }
 
     // TODO 8: Define a method named getProductById that takes a Long parameter named id (product ID) annotated with @PathVariable.
