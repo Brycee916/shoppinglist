@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,21 +72,25 @@ public class ProductController {
         Product updatedProduct = productService.updateProduct(id, productDetails);
         // Check if updatedProduct is not null (i.e., the product was found and updated).
         if (updatedProduct != null){
-        // If found, return the updated product with an HTTP 200 OK status.
+            // If found, return the updated product with an HTTP 200 OK status.
             return ResponseEntity.ok(updatedProduct);
         }
         // If not found, return an HTTP 404 NOT FOUND status.
         return ResponseEntity.notFound().build();
     }
 
-    // TODO 20: Define a method named deleteProduct that takes a Long parameter named id (product ID) annotated with @PathVariable.  The method returns a ResponseEntity containing a success message or an HTTP 404 NOT FOUND status if the product was not found.
-    //TODO 21: Annotate this method with @DeleteMapping("/{id}") to map it to DELETE requests with an ID parameter.
-
+    // Define a method named deleteProduct that takes a Long parameter named id (product ID) annotated with @PathVariable.  The method returns a ResponseEntity containing a success message or an HTTP 404 NOT FOUND status if the product was not found.
+    // Annotate this method with @DeleteMapping("/{id}") to map it to DELETE requests with an ID parameter.
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        // TODO 22: Inside the method, Call the deleteProduct method from productService to delete the product with the given ID. The method returns a message indicating whether the product was deleted or not.
-        // TODO 23: Check if the result message indicates that the product was successfully deleted.
-        // If the deletion was successful, return the result message with an HTTP 200 OK status.
+        // Inside the method, Call the deleteProduct method from productService to delete the product with the given ID. The method returns a message indicating whether the product was deleted or not.
+        String deleteResult = productService.deleteProduct(id);
+        // Check if the result message indicates that the product was successfully deleted.
+        if (deleteResult.contains("Product deleted")){
+            // If the deletion was successful, return the result message with an HTTP 200 OK status.
+            return ResponseEntity.ok(deleteResult);
+        }
         // If not, return an HTTP 404 NOT FOUND status.
-        return null;
+        return ResponseEntity.notFound().build();
     }
 }
