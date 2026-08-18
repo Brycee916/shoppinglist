@@ -10,7 +10,11 @@ public class EventService {
     private Map<Long, Event> events = new HashMap<>();
 
     public EventService(){}
-    
+
+    public Map<Long, Event> getAllEvents(){
+        return events;
+    }
+
     public Event getEventById(long id){
         Event foundEvent = events.get(id);
         return foundEvent;
