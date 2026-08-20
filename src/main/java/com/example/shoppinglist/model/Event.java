@@ -1,7 +1,14 @@
 package com.example.shoppinglist.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Event {
+
+    @Id
     private long id;
+    
     private String name;
     private String date; //YYYY-MM-DD
 

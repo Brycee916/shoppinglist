@@ -2,10 +2,14 @@ package com.example.shoppinglist.service;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import com.example.shoppinglist.exceptions.ResourceNotFoundException;
 import com.example.shoppinglist.exceptions.BadRequestException;
 import com.example.shoppinglist.model.Event;
 
+@Service
 public class EventService {
 
     private Map<Long, Event> events = new HashMap<>();
