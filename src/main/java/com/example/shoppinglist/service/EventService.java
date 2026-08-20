@@ -2,7 +2,8 @@ package com.example.shoppinglist.service;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import com.example.shoppinglist.exceptions.ResourceNotFoundException;
+import com.example.shoppinglist.exceptions.BadRequestException;
 import com.example.shoppinglist.model.Event;
 
 public class EventService {
@@ -17,10 +18,18 @@ public class EventService {
 
     public Event getEventById(long id){
         Event foundEvent = events.get(id);
+
+        if (foundEvent == null){
+            throw new ResourceNotFoundException("Event with id " + id + " not found");
+        }
         return foundEvent;
     }
     public Event addEvent(Event event){
-        Event newEvent = events.put(event.getId(), event);
-        return events.get(newEvent.getId());
+        if (event.getDate().compareTo("2026-01-01") < 0){
+            throw new BadRequestException("Event date cannot be in the past");
+        }
+
+        events.put(event.getId(), event);
+        return event;
     }
 }
